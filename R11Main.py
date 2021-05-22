@@ -27,14 +27,14 @@ def main(args):
         return
 
     workBook = load_workbook(args[0])
-    planilhaAusenciaAbonada = workBook[CONST.nomeAusenciaAbonada]
-    planilhaConsultaMedica = workBook[CONST.nomeConsultaMedica]
-    indicesAusenciaAbonada = getColumnIndexes( planilhaAusenciaAbonada, CONST.colunasAusenciaAbonada)
-    indicesConsultaMedica = getColumnIndexes( planilhaConsultaMedica, CONST.colunasConsultaMedica)
+    planilhaAusenciaAbonada = workBook[CONST.NOME_AUSENCIA_ABONADA]
+    planilhaConsultaMedica = workBook[CONST.NOME_CONSULTA_MEDICA]
+    indicesAusenciaAbonada = getColumnIndexes( planilhaAusenciaAbonada, CONST.COLUNAS_AUSENCIA_ABONADA)
+    indicesConsultaMedica = getColumnIndexes( planilhaConsultaMedica, CONST.COLUNAS_CONSULTA_MEDICA)
 
-    ausenciaAbonada = AusenciaAbonada(planilhaAusenciaAbonada, indicesAusenciaAbonada)
-    ausenciaAbonada.validar()
-    consultaMedica = ConsultaMedica(planilhaAusenciaAbonada, indicesConsultaMedica)
+    #ausenciaAbonada = AusenciaAbonada(planilhaAusenciaAbonada, indicesAusenciaAbonada)
+    #ausenciaAbonada.validar()
+    consultaMedica = ConsultaMedica(planilhaConsultaMedica, indicesConsultaMedica)
     consultaMedica.validar()
 
     workBook.save(args[0])
