@@ -26,7 +26,9 @@ class RegrasGerais:
     
     def __entrePeriodo(self, hora, periodos):
         """Retorna True or False se uma determinada hora está entre dois horários.
-           Pametros: hora (string, ex: 23:30) - periodos (string de horas, ex: "09:00 - 13:00;14:00 - 16:00")"""
+           Pametros: 
+                hora (string, ex: 23:30)
+                periodos (string de horas, ex: "09:00 - 13:00;14:00 - 16:00")"""
         range_periodos = [tuple(x.split(" - ")) for x in periodos.split(";")]
         for periodo in range_periodos:
             if  periodo[0] <= hora <= periodo[1]:
