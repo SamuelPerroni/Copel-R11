@@ -90,6 +90,8 @@ class RegrasGerais:
             and not int(self.getVal(linha, "QTD_MARCACOES")) % 2 == 0)
 
     def jornadaCumpridaDentroDoTempoTeorico(self, linha):
+        # Aqui considerar as marcações de AUSENCIA E PRESENCA
+        
         horasTeorico = self.getVal(linha,"HORAS_TEORICO").replace(',','.')  
         tempoTeorico =  self.getVal(linha,"TEMPO_TEORICO")
         marcacoes = self.getVal(linha,"MARCACOES")
@@ -98,6 +100,10 @@ class RegrasGerais:
         return totalHours >= float(horasTeorico) and dentrodoTempoTeorico
     
     def semRegistrosNaEscalaDeIntervalo(self, linha):
+        """
+        Utilizar o valores entre os periodos: 08:30 - 11:30;14:00 - 17:00 => 11:30 - 14:00        
+        """
+
         tempoTeorico =  self.getVal(linha,"TEMPO_TEORICO")
         marcacoes = self.getVal(linha,"MARCACOES")
         return self.__marcacoesEntrePeriodos(marcacoes, tempoTeorico)

@@ -8,8 +8,7 @@ class ConsultaMedica(RegrasGerais):
         #self.regrasGerais = RegrasGerais(planilha, indices)        
         print('init ConsultaMedica')
 
-    #def __getVal(self, linha, indice):
-    #    return self.planilha.cell(row=linha, column=self.indices[indice]).value
+
 
     def validar(self):
         maxLines = self.planilha.max_row + 1
@@ -23,14 +22,28 @@ class ConsultaMedica(RegrasGerais):
                     #colunas de AUSENCIA, PRESENCA e QTD_MARCACOES com SEM DADOS
                     self.reprovar(linha, '03')
                     continue
-                if self.horaInicialForaDoPeriodo(linha):
-                    #valor da coluna HORA_INICIAL fora dos intervalos dos periodos PERIODO1 e PERIODO2
-                    self.reprovar(linha, '09')
-                    continue
+
                 if self.is_integer(self.getVal(linha, "QTD_MARCACOES")):
                     #quantidade de marcacoes é um numero
                     if not int(self.getVal(linha, "QTD_MARCACOES")) % 2 == 0:
                         #quantidade de marcacoes é impar
                         self.reprovar(linha,"03")
-                #    else:
+                        continue
+                    else:
+                        if self.horaInicialForaDoPeriodo(linha):
+                            #valor da coluna HORA_INICIAL fora dos intervalos dos periodos TEMPO_TEORICO e TEMPO_TEORICO
+                            if self.jornadaCumpridaDentroDoTempoTeorico(linha):
+                                self.reprovar(linha, '09')
+                            else:
+                                self.reprovar(linha, '07')
+                            continue
+                        if self.semRegistrosNaEscalaDeIntervalo(linha):
+                            self.reprovar(linha,'07')
+                            continue
+                        if self.validarHoraInicialIntervalo(linha):
+                            abono = self.calcularAbono(linha)
+                            self.abonar(linha, abono)
+                            continue
+                        
+                        
 
