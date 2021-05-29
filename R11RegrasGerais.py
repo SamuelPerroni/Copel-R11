@@ -128,3 +128,33 @@ class RegrasGerais:
         if horasTeorico == "4,00":
             return ""
         else:
+            pass
+
+    def validaSolicitacaoJornada(self, tempoTeorico, periodo1, periodo2, solicitacaoInicial, solicitacaoFinal):
+        '''Valida se o periodo solicitado é igual a jornada de trabalho.
+            Utilizado para Validar se o abono de horas da Ausencia Abonada será do dia todo.'''
+            
+        tempoTeoricoInicio = tempoTeorico[0:tempoTeorico.find("-")-1]
+        periodo1Inicio = periodo1[0:periodo1.find("-")-1]
+        tempoTeoricoFinal = tempoTeorico[tempoTeorico.find("-")+2:]
+        periodo2Final = periodo2[periodo2.find("-")+2:]
+
+        if (solicitacaoInicial == tempoTeoricoInicio or solicitacaoInicial == periodo1Inicio) and (solicitacaoFinal == tempoTeoricoFinal or solicitacaoFinal == periodo2Final):
+            return True
+        else:
+            return False
+
+    def validaPTBALL(self, registro, ptball, solicitacaoInicial, solicitacaoFinal):
+        '''
+            Se atingiu o limite do PT_BAL00.
+        '''
+        tempoTotalSolicitado = solicitacaoFinal - solicitacaoInicial
+
+        if ptball + tempoTotalSolicitado < 40:
+            solicitacao = "Reprovado"
+            solucao = "13"
+        else:
+            novoPtball = ptball + tempoTotalSolicitado
+            #Chamar função para calcular o abono que irá dar e adicionar o novo PT_ball nos ticket
+            #com mesmo registro nas linhas abaixo.
+            
