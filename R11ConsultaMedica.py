@@ -40,9 +40,14 @@ class ConsultaMedica(RegrasGerais):
                         if self.semRegistrosNaEscalaDeIntervalo(linha):
                             self.reprovar(linha,'07')
                             continue
+                        #Validar este metodo.....?????????
                         if self.validarHoraInicialIntervalo(linha):
-                            abono = self.calcularAbono(linha)
-                            self.abonar(linha, abono)
+                            retorno = self.calcularAbono(linha)
+                            if not retorno is None:
+                                if retorno[0] == CONST.REPROVADO:
+                                    self.reprovar(linha, retorno[1])
+                                else:
+                                    self.abonar(linha, retorno[1])
                             continue
                         
                         
